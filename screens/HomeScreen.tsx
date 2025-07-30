@@ -2,6 +2,7 @@ import { StyleSheet, SafeAreaView, ScrollView, View, Text, Image, TouchableOpaci
 import React from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import FeaturedGuides from '../components/FeaturedGuides';
 
 export type HomeStackParamList = {
     HomeMain: undefined;
@@ -56,6 +57,13 @@ const HomeScreen = () => {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                </View>
+
+                <View className='p-4'>
+                    <Text className='text-2xl font-semibold mb-4'>
+                        Hướng dẫn được đề xuất
+                    </Text>
+                    <FeaturedGuides />
                 </View>
             </ScrollView>
         </SafeAreaView>
