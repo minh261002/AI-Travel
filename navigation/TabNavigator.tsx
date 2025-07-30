@@ -13,23 +13,25 @@ const TabNavigator = () => {
             tabBarActiveTintColor: '#FF5722',
             tabBarInactiveTintColor: '#666',
             tabBarStyle: { backgroundColor: '#FFF', borderTopWidth: 0 },
-            tabBarIconStyle: { marginBottom: -3 },
             tabBarLabelStyle: { fontSize: 12 }
         }}>
-            <Tab.Screen name='Home' component={HomeStack} options={{
+            <Tab.Screen name='Trang chủ' component={HomeStack} options={{
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="home" color={color} size={size} />
-                )
+                ),
+                headerShown: false
             }} />
-            <Tab.Screen name='Guides' component={GuideStack} options={{
+            <Tab.Screen name='Hướng dẫn' component={GuideStack} options={{
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="book" color={color} size={size} />
-                )
+                ),
+                headerShown: false
             }} />
-            <Tab.Screen name='Profile' component={ProfileStack} options={{
+            <Tab.Screen name='Cá nhân' component={ProfileStack} options={{
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="person" color={color} size={size} />
-                )
+                ),
+                headerShown: false
             }} />
         </Tab.Navigator>
     )
