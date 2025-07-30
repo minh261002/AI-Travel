@@ -1,10 +1,10 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: [["babel-preset-expo", { jsxImportSource: "nativewind" }]],
-    plugins: [
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
       "nativewind/babel",
-      "react-native-reanimated/plugin", // Chỉ thêm nếu bạn dùng Reanimated (ví dụ carousel parallax)
     ],
+    plugins: ["react-native-reanimated/plugin"],
   };
 };
