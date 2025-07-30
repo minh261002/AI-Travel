@@ -5,6 +5,7 @@ import HomeStack from './HomeStack';
 import GuideStack from './GuideStack';
 import ProfileStack from './ProfileStack';
 import { Ionicons } from '@expo/vector-icons';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const TabNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -27,7 +28,7 @@ const TabNavigator = () => {
                 ),
                 headerShown: false
             }} />
-            <Tab.Screen name='Cá nhân' component={ProfileStack} options={{
+            <Tab.Screen name='Cá nhân' component={ProfileScreen} options={{
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="person" color={color} size={size} />
                 ),

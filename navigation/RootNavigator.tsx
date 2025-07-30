@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import { useAuth } from '@clerk/clerk-expo';
 
 export type RootStackParamLimit = {
     Auth: undefined;
@@ -15,10 +16,20 @@ export type RootStackParamLimit = {
 const Stack = createNativeStackNavigator<RootStackParamLimit>();
 
 const RootNavigator = () => {
-    const signin = false
+    const { isLoaded, isSignedIn } = useAuth();
+
+    if (!isLoaded) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" color="#FF5722" />
+            </View>
+        )
+    }
+
+    if (isSignedIn) { }
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {signin ? <Stack.Screen name='Main' component={TabNavigator} /> : (
+            {isSignedIn ? <Stack.Screen name='Main' component={TabNavigator} /> : (
                 <Stack.Group>
                     <Stack.Screen name='SignIn' component={SignInScreen} />
                     <Stack.Screen name='SignUp' component={SignUpScreen} />

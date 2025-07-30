@@ -2,15 +2,72 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import GoogleSignIn from '../components/GoogleSignIn'
+import { useSignUp } from '@clerk/clerk-expo'
 
 const SignUpScreen = () => {
     const navigation = useNavigation()
+    const { isLoaded, signUp, setActive } = useSignUp();
 
     const [data, setData] = useState({
         email: "",
         password: "",
     })
     const [error, setError] = useState("")
+    const [pendingVerification, setPendingVerification] = useState(false)
+    const [code, setCode] = useState("")
+
+    const onSignUpPress = async () => {
+        if (!isLoaded) return;
+        try {
+            await signUp.create({
+                emailAddress: data.email,
+                password: data.password,
+            })
+            await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+            setPendingVerification(true)
+        } catch (err) {
+            console.error(err);
+            setError(err.errors[0]?.message || "Something went wrong")
+        }
+    }
+
+    const onVerifyPress = async () => {
+        if (!isLoaded) return;
+        try {
+            const completeSignUp = await signUp.attemptEmailAddressVerification({
+                code: code,
+            })
+
+            if (completeSignUp.status === "complete") {
+                await setActive({
+                    session: completeSignUp.createdSessionId,
+                })
+            } else {
+                setError("Xác thực thất bại, vui lòng thử lại")
+            }
+        } catch (err) {
+            console.error(err);
+            setError(err.errors[0]?.message || "Something went wrong")
+        }
+    }
+
+    if (pendingVerification) {
+        return (
+            <View style={styles.container}>
+                <Text>Xác thực email</Text>
+                <TextInput
+                    placeholder='Mã xác thực'
+                    value={code}
+                    onChangeText={(text) => setCode(text)}
+                    style={styles.input}
+                />
+                {error && <Text style={styles.errorText}>{error}</Text>}
+                <TouchableOpacity style={styles.button} onPress={onVerifyPress}>
+                    <Text style={styles.buttonText}>Xác thực</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -32,7 +89,9 @@ const SignUpScreen = () => {
                 style={styles.input}
             />
 
-            <TouchableOpacity style={styles.button}>
+            {error && <Text style={styles.errorText}>{error}</Text>}
+
+            <TouchableOpacity style={styles.button} onPress={onSignUpPress}>
                 <Text style={styles.buttonText}>Đăng ký</Text>
             </TouchableOpacity>
 
