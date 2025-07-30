@@ -3,6 +3,7 @@ import React from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import FeaturedGuides from '../components/FeaturedGuides';
+import PopularDestination from '../components/PopularDestination';
 
 export type HomeStackParamList = {
     HomeMain: undefined;
@@ -53,7 +54,7 @@ const HomeScreen = () => {
                         <Text className='text-white text-2xl font-bold text-center px-20 mb-4'>Lên kế hoạch cho chuyến đi tiếp theo của bạn</Text>
                         <TouchableOpacity className='bg-orange-500 px-6 py-2 rounded-full'>
                             <Text className='text-white font-semibold text-base'>
-                                Tạo chuyến đi
+                                Tạo mới
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -64,6 +65,13 @@ const HomeScreen = () => {
                         Hướng dẫn được đề xuất
                     </Text>
                     <FeaturedGuides />
+                </View>
+
+                <View className='p-4'>
+                    <Text className='text-2xl font-semibold mb-4'>
+                        Điểm đến phổ biến
+                    </Text>
+                    <PopularDestination />
                 </View>
             </ScrollView>
         </SafeAreaView>
